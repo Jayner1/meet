@@ -58,7 +58,7 @@ module.exports.getAuthURL = async () => {
       authUrl: authUrl,
     }),
   };
-}
+};
 
 module.exports.getAccessToken = async (event) => {
   // The values used to instantiate the OAuthClient are at the top of the file
