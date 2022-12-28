@@ -89,7 +89,25 @@
           });
       };
       // --------------------- END OF STEP 2
+// -- STEP 3
+      const getEvents = document.getElementById("getEvents");
+      const events = document.getElementById("events");
+      const getCalendarEvents = "YOUR_LAMBDA_GET_CALENDAR_EVENTS_ENDPOINT";
 
+      getEvents.onclick = function () {
+        const { access_token } = JSON.parse(accessTokenElement.innerText);
+        const eventRequest = getCalendarEvents + "/" + access_token;
+        fetch(eventRequest)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (json) {
+            events.innerText = JSON.stringify(json, null, 2);
+          });
+      };
+      // -- END OF STEP 3
     </script>
   </body>
 </html>
+
+<!-- {"access_token":"ya29.a0AX9GBdUyJwaXyd3zBqflIpNnO5mj4sHWjThKr536LLI-ubiIbZfR0AMgDwdtngIx9iqyxM8lwegFQRVWQFT8X3ptl5RdFCW1U-n3Bns1jqz_CqA5ElTHTecDWqVOjih-1bbKha15wqi4ZxVJkVLhQJ8nXDOvaCgYKAbkSARISFQHUCsbCePEPQzX28vXhOhClfkpmoA0163","scope":"https://www.googleapis.com/auth/calendar.readonly","token_type":"Bearer","expiry_date":1672106644596} -->
