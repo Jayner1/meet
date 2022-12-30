@@ -3,8 +3,9 @@ import { shallow } from 'enzyme';
 import CitySearch from '../CitySearch';
 
 describe('<CitySearch /> component', () => {
-    test('renders a list of suggestions', () => {
+    test('renders text input correctly', () => {
         const CitySearchWrapper = shallow(<CitySearch />);
-        expect(CitySearchWrapper.find('.suggestions')).toHaveLength(1);
+        const query = CitySearchWrapper.state('query');
+        expect(CitySearchWrapper.find('.city').prop('value')).toBe(query);
       });
 });
