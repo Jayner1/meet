@@ -18,8 +18,7 @@ describe('<App /> component', () => {
   test('render CitySearch', () => {
     expect(AppWrapper.find(CitySearch)).toHaveLength(1);
   });
-  test('render NumberOfEvents component', () => {
+  test("render NumberOfEvents", () => {
     expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
   });
-
 });
