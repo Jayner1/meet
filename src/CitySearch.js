@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { InfoAlert } from "./Alert";
 
 class CitySearch extends Component {
   state = {
-    query: '',
+    query: "",
     suggestions: [],
-    showSuggestions: undefined
-  }
+    showSuggestions: false,
+    infoText: "",
+  };
 
   handleInputChanged = (event) => {
     const value = event.target.value;
@@ -16,13 +18,14 @@ class CitySearch extends Component {
     if (suggestions.length === 0) {
       this.setState({
         query: value,
-        infoText: 'Could not find the city you are looking for. Please try another city.',
+        infoText:
+          "We cannot find the city you are looking for. Please try another city",
       });
     } else {
       return this.setState({
         query: value,
         suggestions,
-        infoText: ''
+        infoText: "",
       });
     }
   };
@@ -30,35 +33,57 @@ class CitySearch extends Component {
   handleItemClicked = (suggestion) => {
     this.setState({
       query: suggestion,
-      showSuggestions: false
+      suggestions: [],
+      showSuggestions: false,
+      infoText: "",
     });
-  
     this.props.updateEvents(suggestion);
-  }
+  };
+
+  getSuggestionsStyle = () => {
+    return this.state.showSuggestions
+      ? {
+          top: this.state.infoText === "" ? "48px" : "70px",
+        }
+      : { opacity: 0 };
+  };
+
+  hideSuggestions = () => {
+    this.setState({
+      showSuggestions: false,
+    });
+  };
 
   render() {
     return (
       <div className="CitySearch" onBlur={this.hideSuggestions}>
-       <input
-        type="text"
-        className="city"
-        value={this.state.query}
-        onChange={this.handleInputChanged}
-        onFocus={() => { this.setState({ showSuggestions: true }) }}
-    />
-       <ul className="suggestions" style={this.state.showSuggestions ? {}: { display: 'none' }}>
-         {this.state.suggestions.map((suggestion) => (
-       <li
-        key={suggestion}
-        onClick={() => this.handleItemClicked(suggestion)}
-    >{suggestion}</li>
-  ))}
-       <li onClick={() => this.handleItemClicked("all")}>
-       <b>See all cities</b>
-      </li>
-      </ul>
-     </div>
-   );
- }
+        <InfoAlert text={this.state.infoText} />
+        <input
+          type="text"
+          className="city"
+          value={this.state.query}
+          onChange={this.handleInputChanged}
+          placeholder="Search for location..."
+          onFocus={() => {
+            this.setState({ showSuggestions: true });
+          }}
+        />
+        <ul className="suggestions" style={this.getSuggestionsStyle()}>
+          {this.state.suggestions.map((suggestion) => (
+            <li
+              key={suggestion}
+              onClick={() => this.handleItemClicked(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+          <li onClick={() => this.handleItemClicked("all")}>
+            <b>See all cities</b>
+          </li>
+        </ul>
+      </div>
+    );
+  }
 }
- export default CitySearch;
+
+export default CitySearch;
