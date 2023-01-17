@@ -5,6 +5,7 @@ import App from './App';
 // import * as serviceWorker from './serviceWorker';
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from './reportWebVitals';
+// import * as serviceWorker from './serviceWorker';
 import * as atatus from 'atatus-spa';
 
 atatus.config('489cdaa7604b488ca371356f41d57b87').install();
@@ -21,6 +22,7 @@ root.render(
 // serviceWorkerRegistration.unregister();
 // serviceWorker.unregister();
 serviceWorkerRegistration.register();
+// serviceWorker.register();
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
