@@ -7,7 +7,7 @@ import { getEvents, extractLocations, checkToken } from './api';
 import './nprogress.css';
 // import WelcomeScreen from './WelcomeScreen';
 import {
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 
 class App extends Component {
