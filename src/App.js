@@ -1,58 +1,40 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import './nprogress.css';
-import {
-  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-
 import EventList from './EventList';
-// import EventGenre from './EventGenre';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-// import { OfflineAlert } from './Alert';
-
-import { extractLocations, getEvents, checkToken } from './api';
+import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
+import './nprogress.css';
 // import WelcomeScreen from './WelcomeScreen';
-
-
+import {
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip
+} from 'recharts';
 
 class App extends Component {
-
   state = {
     events: [],
     locations: [],
-    currentLocation: "all",
-    currentEventCount: 32,
-    infoText: "",
-    showWelcomeScreen: undefined,
+    numberOfEvents: 32,
+    showWelcomeScreen: undefined
   }
-
 
   updateEvents = (location, eventCount) => {
-
-    if (!navigator.onLine) this.setState({ infoText: "This page is currently being displayed in offline mode." });
-    else this.setState({ infoText: "" });
-
-    if (location === null) {
-      location = this.state.currentLocation;
-    }
-
-    if (eventCount === null) {
-      eventCount = this.state.currentEventCount;
-    }
+    if (eventCount === undefined) {
+      eventCount = this.state.numberOfEvents;
+    } else this.setState({ numberOfEvents: eventCount });
 
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
-        events :
-        events.filter((event) => event.location === location);
-      const updatedEvents = locationEvents.slice(0, eventCount);
+      const locationEvents =
+        location === 'all'
+          ? events
+          : events.filter((event) => event.location === location);
+      const filteredEvents = locationEvents.slice(0, eventCount);
       this.setState({
-        events: updatedEvents,
+        events: filteredEvents,
         currentLocation: location,
-        currentEventCount: eventCount
       });
     });
-  }
+  };
 
   getData = () => {
     const {locations, events} = this.state;
@@ -66,29 +48,21 @@ class App extends Component {
 
   async componentDidMount() {
     this.mounted = true;
-    const accessToken = localStorage.getItem("access_token");
-    const isTokenValid =
-      !window.location.href.startsWith("http://localhost") &&
-      !(accessToken && !navigator.onLine) &&
-      (await checkToken(accessToken)).error
-        ? false
-        : true;
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false :
+    true;
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get("code");
-    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
-    if ((code || isTokenValid) && this.mounted) {
-      getEvents().then((events) => {
-        if (this.mounted) {
-          this.setState({
-            events: events.slice(0, this.state.currentEventCount),
-            locations: extractLocations(events),
-          });
-        }
-      });
-    }
-  }
-
-
+this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+if ((code || isTokenValid) && this.mounted) {
+getEvents().then((events) => {
+if (this.mounted) {
+this.setState({ events, locations: extractLocations(events) });
+}
+});
+}
+}
+  
   componentWillUnmount(){
     this.mounted = false;
   }
@@ -124,8 +98,6 @@ class App extends Component {
       </div>
     );
   }
-
-
 }
 
 export default App;
