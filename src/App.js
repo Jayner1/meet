@@ -60,6 +60,7 @@ this.setState({ events, locations: extractLocations(events) });
 className="App" />
     return (
       <div className="App">
+        {!navigator.onLine && (<h1>You are in offline mode!</h1>)}
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <EventList events={this.state.events} />
         <NumberOfEvents />
