@@ -3,7 +3,7 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
+import { getEvents, extractLocations, checkToken } from './api';
 import './nprogress.css';
 // import WelcomeScreen from './WelcomeScreen';
 import {
