@@ -263,7 +263,7 @@ import {
   extractLocations,
   getEventsFromServer,
   getAccessToken,
-} from "./apis";
+} from "./api";
 
 import "./assets/css/nprogress.css";
 import "./App.css";
