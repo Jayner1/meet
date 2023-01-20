@@ -5,7 +5,7 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
 import './nprogress.css';
-// import WelcomeScreen from './WelcomeScreen';
+import WelcomeScreen from './WelcomeScreen';
 import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -14,8 +14,8 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    numberOfEvents: 32
-    // showWelcomeScreen: undefined
+    numberOfEvents: 32,
+    showWelcomeScreen: undefined
   }
 
   updateEvents = (location, eventCount) => {
