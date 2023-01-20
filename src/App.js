@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import EventList from './EventList';
+import EventGenre from './EventGenre';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations, checkToken } from './api';
@@ -91,8 +92,8 @@ class App extends Component {
           updateEvents={this.updateEvents}
           numberOfEvents={numberOfEvents}
         />       
-         <h4>Events in each city</h4>
-
+         <div className="data-vis-wrapper">
+          <EventGenre events={events} />
         <ResponsiveContainer height={400} >
           <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
             <CartesianGrid />
@@ -107,6 +108,7 @@ class App extends Component {
             <Scatter data={this.getData()} fill="#8884d8" />
           </ScatterChart>
         </ResponsiveContainer>
+        </div>
         <EventList events={events} />
       </div>
     );
