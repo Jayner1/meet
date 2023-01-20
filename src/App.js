@@ -258,22 +258,21 @@
 // export default App;
 
 
-import React, { Component } from "react";
+import React, {Component} from 'react';
+import './App.css';
+import './nprogress.css';
 import {
-  extractLocations,
-  getEventsFromServer,
-  getAccessToken,
-} from "./api";
+  ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from 'recharts';
 
-import "./assets/css/nprogress.css";
-import "./App.css";
+import EventList from './EventList';
+import EventGenre from './EventGenre';
+import CitySearch from './CitySearch';
+import NumberOfEvents from './NumberOfEvents';
+import { OfflineAlert } from './Alert';
 
-// import Banner from "./components/banner";
-import WarningAlert from "./components/alert/warning-alert";
-import EventList from "./components/event-list";
-import WelcomeScreen from "./components/welcome-screen";
-import EventsStatistics from "./components/events-statistics";
-import SearchEditEvents from "./components/search-edit-events";
+import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
+import WelcomeScreen from './WelcomeScreen';
 
 class App extends Component {
   constructor(props) {
@@ -297,19 +296,7 @@ class App extends Component {
         this.setState({ events, locations: extractLocations(events) });
       }
     });
-    // const accessToken = localStorage.getItem("access_token");
-    // const isTokenValid = (await checkToken(accessToken)).error ? false : true;
-    // const searchParams = new URLSearchParams(window.location.search);
-    // const code = searchParams.get("code");
-
-    // this.setState({ showWelcomeScreen: !(code || isTokenValid) });
-    // if ((code || isTokenValid) && this.mounted) {
-    //   getEventsFromServer().then((events) => {
-    //     if (this.mounted) {
-    //       this.setState({ events, locations: extractLocations(events) });
-    //     }
-    //   });
-    // }
+ 
   }
 
   componentWillUnmount() {
@@ -317,35 +304,43 @@ class App extends Component {
   }
 
   render() {
-    const { events, locations, nEvents, showWelcomeScreen } = this.state;
-    const warningMessage = navigator.onLine
-      ? ""
-      : "App is running in Offline-Mode";
-
+    const { showWelcomeScreen } = this.state;    
     if (showWelcomeScreen === undefined) {
-      return <div className="App"></div>;
-    }
-
-    return (
-      <div className="App">
-        <Banner />
-        <WarningAlert message={warningMessage} />
-        <EventsStatistics
-          cityStatisticsData={this.getCityStatistics()}
-          eventsGenreStatisticsData={this.getEventsGenreStatistics()}
-        />
-        <SearchEditEvents
-          locations={locations}
-          onUpdateEvents={this.updateEventsHandler}
-        />
-        <EventList events={events.slice(0, nEvents)} />
+      return <div className="App" />;
+    } else if (showWelcomeScreen === true) {
+      return (
         <WelcomeScreen
           showWelcomeScreen={showWelcomeScreen}
-          getAccessToken={getAccessToken}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
         />
+      );
+    } else {
+      return <div className="App">
+        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents}/>
+        <NumberOfEvents updateEvents={this.updateEvents}/>
+        <OfflineAlert text={this.state.infoText}/>
+
+        <div className="data-vis-wrapper">
+          <EventGenre events={this.state.events}/>
+          <ResponsiveContainer className="scatterChart" height={400}> 
+            <ScatterChart 
+              margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="category" dataKey="city" name="City" />
+              <YAxis type="number" dataKey="number" name="Number of events" allowDecimals={false} />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+              <Scatter data={this.getData()} fill="#8884d8" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+
+        <EventList events={this.state.events}/>
       </div>
-    );
+    }
   }
+
 
   updateEventsHandler = async (location, nEvents) => {
     if (location) {
