@@ -268,7 +268,7 @@ import {
 import "./assets/css/nprogress.css";
 import "./App.css";
 
-import Banner from "./components/banner";
+// import Banner from "./components/banner";
 import WarningAlert from "./components/alert/warning-alert";
 import EventList from "./components/event-list";
 import WelcomeScreen from "./components/welcome-screen";
