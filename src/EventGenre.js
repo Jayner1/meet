@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  PieChart, Pie, Cell, ResponsiveContainer
-} from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend} from 'recharts';
+
 
 const EventGenre = ({ events }) => {
 
