@@ -3,9 +3,9 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
+import { getEvents, extractLocations, checkToken } from './api';
 import './nprogress.css';
-import WelcomeScreen from './WelcomeScreen';
+// import WelcomeScreen from './WelcomeScreen';
 import {
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -15,7 +15,7 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32,
-    showWelcomeScreen: undefined
+    // showWelcomeScreen: undefined
   }
 
   updateEvents = (location, eventCount) => {
@@ -81,19 +81,7 @@ class App extends Component {
   }
 
   render() {
-    const { showWelcomeScreen } = this.state;    
-    if (showWelcomeScreen === undefined) {
-      return <div className="App" />;
-    } else if (showWelcomeScreen === true) {
-      return (
-        <WelcomeScreen
-          showWelcomeScreen={showWelcomeScreen}
-          getAccessToken={() => {
-            getAccessToken();
-          }}
-        />
-      );
-    } else {
+    const { locations, numberOfEvents, events } = this.state;
     return (
       <div className="App">
         <h1>Meet App</h1>
@@ -123,7 +111,6 @@ class App extends Component {
       </div>
     );
   }
-}
 }
 
 export default App;
