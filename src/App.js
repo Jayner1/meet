@@ -181,13 +181,14 @@ class App extends Component {
     return data;
   };
 
-  async componentDidMount() {
+  // async 
+  componentDidMount() {
     this.mounted = true;
     const accessToken = localStorage.getItem("access_token");
     const isTokenValid =
       !window.location.href.startsWith("http://localhost") &&
       !(accessToken && !navigator.onLine) &&
-      (await checkToken(accessToken)).error
+      (checkToken(accessToken)).error
         ? false
         : true;
     const searchParams = new URLSearchParams(window.location.search);
