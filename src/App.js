@@ -13,13 +13,17 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 class App extends Component {
   state = {
     events: [],
+    location: "",
     locations: [],
     numberOfEvents: 32,
     offlineText: '',
     showWelcomeScreen: undefined
   }
 
-  updateEvents = (location) => {
+  updateEvents = () => {
+    const location = this.state.location;
+    const numberofEvents = this.state.numberofEvents;
+    
     getEvents().then((events) => {
       const locationEvents = 
       (location === "all")
@@ -31,9 +35,19 @@ class App extends Component {
     });
   }
 
+  updatelocation(location) {
+    this.setState({
+      location: location,
+    }, () => {
+      this.updateEvents();
+    });
+  }
+
   updateNumberOfEvents(number) {
     this.setState({
       numberOfEvents: number,
+    }, () => {
+      this.updateEvents();
     });
   }
 
@@ -93,7 +107,7 @@ class App extends Component {
         <div className='top-container'> 
           <CitySearch 
             locations={this.state.locations}
-            updateEvents={this.updateEvents} />
+            updateEvents={(location) => this.updatelocation(location)} />
           <NumberOfEvents
             num={this.state.numberOfEvents}
             updateNumberOfEvents={(num) => this.updateNumberOfEvents(num)}
