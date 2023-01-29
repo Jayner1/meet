@@ -39,7 +39,7 @@ class App extends Component {
     this.setState({
       location: location,
     }, () => {
-      this.updateLocation();
+      this.updateEvents();
     });
   }
 
@@ -47,7 +47,7 @@ class App extends Component {
     this.setState({
       numberOfEvents: number,
     }, () => {
-      this.updateLocation();
+      this.updateEvents();
     });
   }
 
