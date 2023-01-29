@@ -25,10 +25,10 @@ class App extends Component {
     const numberOfEvents = this.state.numberofEvents;
 
     getEvents().then((events) => {
-      const locationEvents = 
-      (location === "all")
-      ? events
-      : events.filter((event) => event.location === location);
+      let locationEvents = events;
+      if (location !== "all") {
+        locationEvents = events.filter((event) => event.location === location);
+      }
       this.setState({
         events: locationEvents.slice(0, numberOfEvents)
       });
