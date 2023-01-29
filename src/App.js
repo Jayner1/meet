@@ -22,15 +22,15 @@ class App extends Component {
 
   updateEvents = () => {
     const location = this.state.location;
-    const numberofEvents = this.state.numberofEvents;
-    
+    const numberOfEvents = this.state.numberofEvents;
+
     getEvents().then((events) => {
       const locationEvents = 
       (location === "all")
       ? events
       : events.filter((event) => event.location === location);
       this.setState({
-        events: locationEvents.slice(0, this.state.numberOfEvents)
+        events: locationEvents.slice(0, numberOfEvents)
       });
     });
   }
