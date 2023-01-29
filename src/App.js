@@ -14,7 +14,7 @@ class App extends Component {
   state = {
     events: [],
     location: "",
-    // locations: [],
+    locations: [],
     numberOfEvents: 32,
     offlineText: "",
     showWelcomeScreen: undefined
@@ -52,8 +52,8 @@ class App extends Component {
   }
 
   getData = () => {
-    const {location, events} = this.state;
-    const data = location.map((location)=>{
+    const {locations, events} = this.state;
+    const data = locations.map((location)=>{
       const number = events.filter((event) => event.location === location).length
       const city = location.split(', ').shift()
       return {city, number};
@@ -73,7 +73,7 @@ class App extends Component {
         if (this.mounted) {
           this.setState({
             events: events.slice(0, this.state.numberOfEvents),
-            location: extractLocations(events)});
+            locations: extractLocations(events)});
         }
       });
     }
@@ -106,7 +106,7 @@ class App extends Component {
         <OfflineAlert text={this.state.offlineText}/>
         <div className='top-container'> 
           <CitySearch 
-            location={this.state.location}
+            locations={this.state.locations}
             updateLocation={(location) => this.updateLocation(location)} />
           <NumberOfEvents
             num={this.state.numberOfEvents}
