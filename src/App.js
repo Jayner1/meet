@@ -13,7 +13,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 class App extends Component {
   state = {
     events: [],
-    location: "",
+    location: '',
     locations: [],
     numberOfEvents: 32,
     offlineText: '',
@@ -39,7 +39,7 @@ class App extends Component {
     this.setState({
       location: location,
     }, () => {
-      this.updateLocation();
+      this.updateEvents();
     });
   }
 
@@ -47,7 +47,7 @@ class App extends Component {
     this.setState({
       numberOfEvents: number,
     }, () => {
-      this.updateLocation();
+      this.updateEvents();
     });
   }
 
