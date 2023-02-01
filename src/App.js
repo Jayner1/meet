@@ -13,7 +13,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 class App extends Component {
   state = {
     events: [],
-    location: "",
+    location: 'all',
     locations: [],
     numberOfEvents: 32,
     offlineText: "",
