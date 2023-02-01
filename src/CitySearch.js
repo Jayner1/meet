@@ -37,7 +37,9 @@ class CitySearch extends Component {
       showSuggestions: false,
       infoText: "",
     });
+    console.log('test');
     this.props.updateLocation(suggestion);
+    console.log('test2');
   };
 
   getSuggestionsStyle = () => {

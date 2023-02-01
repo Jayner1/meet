@@ -21,6 +21,7 @@ class App extends Component {
   }
 
   updateEvents = () => {
+    console.log('test6');
     const location = this.state.location;
     const numberOfEvents = this.state.numberOfEvents;
 
@@ -36,18 +37,21 @@ class App extends Component {
   }
 
   updateLocation(location) {
+    console.log('test3');
     this.setState({
       location: location,
     }, () => {
-      this.updateLocation();
+      console.log('test4');
+      this.updateEvents();
     });
+    console.log('test5');
   }
 
   updateNumberOfEvents(number) {
     this.setState({
       numberOfEvents: number,
     }, () => {
-      this.updateLocation();
+      this.updateEvents();
     });
   }
 
