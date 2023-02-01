@@ -22,7 +22,7 @@ class App extends Component {
 
   updateEvents = () => {
     const location = this.state.location;
-    const numberOfEvents = this.state.numberofEvents;
+    const numberOfEvents = this.state.numberOfEvents;
 
     getEvents().then((events) => {
       let locationEvents = events;
